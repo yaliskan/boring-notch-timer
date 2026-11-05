@@ -10,6 +10,8 @@ Deze versie is op 5 november 2026 gebouwd en getest op een MacBook Pro M4 met ma
 
 ## Wat kunnen de nieuwe tabbladen?
 
+**Tabbladen verslepen**: hou een tabje een kwart seconde ingedrukt, sleep het naar een andere plek en laat los. De volgorde wordt onthouden.
+
 **Timer**
 - Knoppen **5 / 10 / 15 / 30 min**, en **Custom time** met plus/min-knoppen. Hou **⌥ (Option)** ingedrukt tijdens het klikken voor grotere stappen. Typen kan niet: het notch-venster accepteert geen toetsenbord.
 - Zolang de timer loopt zie je de resterende tijd klein naast de dichte notch. Pauzeren, hervatten en stoppen doe je in de Timer-tab, en bij het openen van de notch land je dan direct op Timer.

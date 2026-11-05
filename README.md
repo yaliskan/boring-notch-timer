@@ -12,6 +12,8 @@ Een aangepaste versie van [Boring Notch](https://github.com/TheBoredTeam/boring.
 | **Timer** | Knoppen 5 / 10 / 15 / 30 min of een eigen tijd. Lopende timer klein naast de dichte notch. Bij afloop 4x een geluid en de notch klapt open. |
 | **System** | CPU- en RAM-meter, en de batterijstand van verbonden Bluetooth-apparaten (AirPods, Magic Keyboard, Magic Mouse, Beats, controllers). Optioneel klein naast de dichte notch. |
 
+De tabbladen zijn te **verslepen**: een tabje ingedrukt houden, slepen, loslaten; de volgorde wordt onthouden.
+
 Verwijderd: de **spiegelfunctie**. Deze app heeft geen camera-recht en kan de camera dus nooit gebruiken. Automatische updates staan uit.
 
 Alles in de nieuwe tabbladen is alleen-lezen en lokaal: geen netwerk, geen bestanden, geen logboek, geen extra rechten.
@@ -38,6 +40,6 @@ Dit project is gebaseerd op [TheBoredTeam/boring.notch](https://github.com/TheBo
 Wijzigingen ten opzichte van het origineel:
 
 - Nieuw: `boringNotch/components/Live activities/TimerFeature.swift`, `SystemMonitorFeature.swift`, `DeviceBatteryFeature.swift`.
-- Aangepast: `ContentView.swift`, `TabSelectionView.swift`, `enums/generic.swift`, `models/BoringViewModel.swift`, `SettingsView.swift`, `OnboardingView.swift`, `WebcamManager.swift` (lege huls), entitlements en projectinstellingen (camera verwijderd, Sparkle uit, eigen bundel-ID).
+- Aangepast: `ContentView.swift`, `TabSelectionView.swift` (verslepen), `enums/generic.swift`, `models/BoringViewModel.swift`, `SettingsView.swift`, `OnboardingView.swift`, `WebcamManager.swift` (lege huls), entitlements en projectinstellingen (camera verwijderd, Sparkle uit, eigen bundel-ID).
 
 Dit is een hobbyproject zonder verband met het Boring Notch-team of Apple.
