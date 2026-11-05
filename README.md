@@ -16,6 +16,8 @@ De tabbladen zijn te **verslepen**: een tabje ingedrukt houden, slepen, loslaten
 
 Verwijderd: de **spiegelfunctie**. Deze app heeft geen camera-recht en kan de camera dus nooit gebruiken. Automatische updates staan uit.
 
+De play-, volgende- en vorige-knoppen in de notch doen niets als er geen speler actief is, zodat macOS niet ongevraagd Music opent.
+
 Alles in de nieuwe tabbladen is alleen-lezen en lokaal: geen netwerk, geen bestanden, geen logboek, geen extra rechten.
 
 ## Downloaden (kant-en-klaar)

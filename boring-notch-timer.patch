@@ -1959,3 +1959,54 @@ index 2a6670b..514a53b 100644
      case home
      case shelf
      case timer
+diff --git a/boringNotch/managers/MusicManager.swift b/boringNotch/managers/MusicManager.swift
+index 8240a6b..ce0d6ec 100644
+--- a/boringNotch/managers/MusicManager.swift
++++ b/boringNotch/managers/MusicManager.swift
+@@ -584,13 +584,24 @@ class MusicManager: ObservableObject {
+     }
+ 
+     // MARK: - Public Methods for controlling playback
++
++    /// True when there is actually a player to talk to. Without this guard a
++    /// play/next command while nothing is playing makes macOS launch its default
++    /// player (Music), or makes an AppleScript controller launch its app.
++    private var hasPlayerToControl: Bool {
++        guard let controller = activeController, controller.isActive() else { return false }
++        return !(bundleIdentifier ?? "").isEmpty
++    }
++
+     func playPause() {
++        guard hasPlayerToControl else { return }
+         Task {
+             await activeController?.togglePlay()
+         }
+     }
+ 
+     func play() {
++        guard hasPlayerToControl else { return }
+         Task {
+             await activeController?.play()
+         }
+@@ -615,18 +626,21 @@ class MusicManager: ObservableObject {
+     }
+     
+     func togglePlay() {
++        guard hasPlayerToControl else { return }
+         Task {
+             await activeController?.togglePlay()
+         }
+     }
+ 
+     func nextTrack() {
++        guard hasPlayerToControl else { return }
+         Task {
+             await activeController?.nextTrack()
+         }
+     }
+ 
+     func previousTrack() {
++        guard hasPlayerToControl else { return }
+         Task {
+             await activeController?.previousTrack()
+         }

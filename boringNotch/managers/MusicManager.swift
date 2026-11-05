@@ -584,13 +584,24 @@ class MusicManager: ObservableObject {
     }
 
     // MARK: - Public Methods for controlling playback
+
+    /// True when there is actually a player to talk to. Without this guard a
+    /// play/next command while nothing is playing makes macOS launch its default
+    /// player (Music), or makes an AppleScript controller launch its app.
+    private var hasPlayerToControl: Bool {
+        guard let controller = activeController, controller.isActive() else { return false }
+        return !(bundleIdentifier ?? "").isEmpty
+    }
+
     func playPause() {
+        guard hasPlayerToControl else { return }
         Task {
             await activeController?.togglePlay()
         }
     }
 
     func play() {
+        guard hasPlayerToControl else { return }
         Task {
             await activeController?.play()
         }
@@ -615,18 +626,21 @@ class MusicManager: ObservableObject {
     }
     
     func togglePlay() {
+        guard hasPlayerToControl else { return }
         Task {
             await activeController?.togglePlay()
         }
     }
 
     func nextTrack() {
+        guard hasPlayerToControl else { return }
         Task {
             await activeController?.nextTrack()
         }
     }
 
     func previousTrack() {
+        guard hasPlayerToControl else { return }
         Task {
             await activeController?.previousTrack()
         }
