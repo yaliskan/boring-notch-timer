@@ -1,0 +1,1765 @@
+diff --git a/BoringNotchXPCHelper/BoringNotchXPCHelperProtocol.swift b/BoringNotchXPCHelper/BoringNotchXPCHelperProtocol.swift
+index 01eccf6..ee11478 100644
+--- a/BoringNotchXPCHelper/BoringNotchXPCHelperProtocol.swift
++++ b/BoringNotchXPCHelper/BoringNotchXPCHelperProtocol.swift
+@@ -25,7 +25,7 @@ import Foundation
+ /*
+  To use the service from an application or other process, use NSXPCConnection to establish a connection to the service by doing something like this:
+ 
+-     connectionToService = NSXPCConnection(serviceName: "theboringteam.boringnotch.BoringNotchXPCHelper")
++     connectionToService = NSXPCConnection(serviceName: "local.notchtimer.boringnotch.BoringNotchXPCHelper")
+      connectionToService.remoteObjectInterface = NSXPCInterface(with: (any BoringNotchXPCHelperProtocol).self)
+      connectionToService.resume()
+ 
+diff --git a/boringNotch.xcodeproj/project.pbxproj b/boringNotch.xcodeproj/project.pbxproj
+index 012d13f..80fc726 100644
+--- a/boringNotch.xcodeproj/project.pbxproj
++++ b/boringNotch.xcodeproj/project.pbxproj
+@@ -104,6 +104,7 @@
+ 		14D570D22C5F6C6A0011E668 /* BoringExtrasMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D570D12C5F6C6A0011E668 /* BoringExtrasMenu.swift */; };
+ 		14D570D52C5F710B0011E668 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D570D42C5F710B0011E668 /* constants.swift */; };
+ 		14E9FEAA2C70BF610062E83F /* DownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9FEA92C70BF610062E83F /* DownloadView.swift */; };
++		A7F3C0D22E4B5A6900C1D2E4 /* TimerFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F3C0D12E4B5A6900C1D2E3 /* TimerFeature.swift */; };
+ 		14E9FEAE2C7325770062E83F /* Button+Bouncing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9FEAD2C7325770062E83F /* Button+Bouncing.swift */; };
+ 		14FC6E502C7DED5600C7BEA5 /* DataTypes+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FC6E4F2C7DED5600C7BEA5 /* DataTypes+Extensions.swift */; };
+ 		507266DB2C908E2E00A2D00D /* HoverButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507266DA2C908E2E00A2D00D /* HoverButton.swift */; };
+@@ -274,6 +275,7 @@
+ 		14D570D12C5F6C6A0011E668 /* BoringExtrasMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoringExtrasMenu.swift; sourceTree = "<group>"; };
+ 		14D570D42C5F710B0011E668 /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
+ 		14E9FEA92C70BF610062E83F /* DownloadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadView.swift; sourceTree = "<group>"; };
++		A7F3C0D12E4B5A6900C1D2E3 /* TimerFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerFeature.swift; sourceTree = "<group>"; };
+ 		14E9FEAD2C7325770062E83F /* Button+Bouncing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+Bouncing.swift"; sourceTree = "<group>"; };
+ 		14FC6E4F2C7DED5600C7BEA5 /* DataTypes+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataTypes+Extensions.swift"; sourceTree = "<group>"; };
+ 		507266DA2C908E2E00A2D00D /* HoverButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverButton.swift; sourceTree = "<group>"; };
+@@ -744,6 +746,7 @@
+ 				B1D365CD2C6A979C0047BDBC /* LiveActivityModifier.swift */,
+ 				B1D365CF2C6A9A6C0047BDBC /* SystemEventIndicatorModifier.swift */,
+ 				14E9FEA92C70BF610062E83F /* DownloadView.swift */,
++				A7F3C0D12E4B5A6900C1D2E3 /* TimerFeature.swift */,
+ 				B172AABF2C95DA0B001623F1 /* InlineHUD.swift */,
+ 			);
+ 			path = "Live activities";
+@@ -970,6 +973,7 @@
+ 				9AB0C6BD2C73C9CB00F7CD30 /* NotchHomeView.swift in Sources */,
+ 				B172AAC02C95DA0B001623F1 /* InlineHUD.swift in Sources */,
+ 				14E9FEAA2C70BF610062E83F /* DownloadView.swift in Sources */,
++				A7F3C0D22E4B5A6900C1D2E4 /* TimerFeature.swift in Sources */,
+ 				B1B112912C6A572100093D8F /* EditPanelView.swift in Sources */,
+ 				B1C4489B2C97376A001F0858 /* TipStore.swift in Sources */,
+ 				1153BD912D986DB300979FB0 /* PlaybackState.swift in Sources */,
+@@ -1058,7 +1062,7 @@
+ 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+ 				MACOSX_DEPLOYMENT_TARGET = 15.5;
+ 				MARKETING_VERSION = 2.7.2;
+-				PRODUCT_BUNDLE_IDENTIFIER = theboringteam.boringnotch.BoringNotchXPCHelper;
++				PRODUCT_BUNDLE_IDENTIFIER = local.notchtimer.boringnotch.BoringNotchXPCHelper;
+ 				PRODUCT_NAME = "$(TARGET_NAME)";
+ 				REGISTER_APP_GROUPS = YES;
+ 				SKIP_INSTALL = YES;
+@@ -1083,7 +1087,7 @@
+ 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+ 				MACOSX_DEPLOYMENT_TARGET = 15.5;
+ 				MARKETING_VERSION = 2.7.2;
+-				PRODUCT_BUNDLE_IDENTIFIER = theboringteam.boringnotch.BoringNotchXPCHelper;
++				PRODUCT_BUNDLE_IDENTIFIER = local.notchtimer.boringnotch.BoringNotchXPCHelper;
+ 				PRODUCT_NAME = "$(TARGET_NAME)";
+ 				REGISTER_APP_GROUPS = YES;
+ 				SKIP_INSTALL = YES;
+@@ -1257,7 +1261,7 @@
+ 				);
+ 				MACOSX_DEPLOYMENT_TARGET = 14.0;
+ 				MARKETING_VERSION = 2.7.2;
+-				PRODUCT_BUNDLE_IDENTIFIER = theboringteam.boringnotch;
++				PRODUCT_BUNDLE_IDENTIFIER = local.notchtimer.boringnotch;
+ 				PRODUCT_NAME = "$(TARGET_NAME)";
+ 				PROVISIONING_PROFILE_SPECIFIER = "";
+ 				SWIFT_EMIT_LOC_STRINGS = YES;
+@@ -1310,7 +1314,7 @@
+ 				);
+ 				MACOSX_DEPLOYMENT_TARGET = 14.0;
+ 				MARKETING_VERSION = 2.7.2;
+-				PRODUCT_BUNDLE_IDENTIFIER = theboringteam.boringnotch;
++				PRODUCT_BUNDLE_IDENTIFIER = local.notchtimer.boringnotch;
+ 				PRODUCT_NAME = "$(TARGET_NAME)";
+ 				PROVISIONING_PROFILE_SPECIFIER = "";
+ 				SWIFT_EMIT_LOC_STRINGS = YES;
+diff --git a/boringNotch/ContentView.swift b/boringNotch/ContentView.swift
+index a285485..968bb38 100644
+--- a/boringNotch/ContentView.swift
++++ b/boringNotch/ContentView.swift
+@@ -23,6 +23,7 @@ struct ContentView: View {
+     @ObservedObject var batteryModel = BatteryStatusViewModel.shared
+     @ObservedObject var brightnessManager = BrightnessManager.shared
+     @ObservedObject var volumeManager = VolumeManager.shared
++    @ObservedObject var timerManager = TimerManager.shared
+     @State private var hoverTask: Task<Void, Never>?
+     @State private var isHovering: Bool = false
+     @State private var anyDropDebounceTask: Task<Void, Never>?
+@@ -65,6 +66,8 @@ struct ContentView: View {
+             && vm.notchState == .closed && Defaults[.showPowerStatusNotifications]
+         {
+             chinWidth = 640
++        } else if timerManager.isActive && vm.notchState == .closed && !vm.hideOnClosed {
++            chinWidth += (2 * TimerLayout.sideWidth + 20)
+         } else if (!coordinator.expandingView.show || coordinator.expandingView.type == .music)
+             && vm.notchState == .closed && (musicManager.isPlaying || !musicManager.isPlayerIdle)
+             && coordinator.musicLiveActivityEnabled && !vm.hideOnClosed
+@@ -172,6 +175,10 @@ struct ContentView: View {
+                             }
+                         }
+                     }
++                    .onChange(of: timerManager.finishCount) { _, _ in
++                        coordinator.currentView = .timer
++                        doOpen()
++                    }
+                     .onChange(of: vm.notchState) { _, newState in
+                         if newState == .closed && isHovering {
+                             withAnimation {
+@@ -296,6 +303,12 @@ struct ContentView: View {
+                       } else if coordinator.sneakPeek.show && Defaults[.inlineHUD] && (coordinator.sneakPeek.type != .music) && (coordinator.sneakPeek.type != .battery) && vm.notchState == .closed {
+                           InlineHUD(type: $coordinator.sneakPeek.type, value: $coordinator.sneakPeek.value, icon: $coordinator.sneakPeek.icon, hoverAnimation: $isHovering, gestureProgress: $gestureProgress)
+                               .transition(.opacity)
++                      } else if timerManager.isActive && vm.notchState == .closed && !vm.hideOnClosed {
++                          TimerLiveActivity(
++                              notchWidth: vm.closedNotchSize.width,
++                              height: vm.effectiveClosedNotchHeight
++                          )
++                          .frame(alignment: .center)
+                       } else if (!coordinator.expandingView.show || coordinator.expandingView.type == .music) && vm.notchState == .closed && (musicManager.isPlaying || !musicManager.isPlayerIdle) && coordinator.musicLiveActivityEnabled && !vm.hideOnClosed {
+                           MusicLiveActivity()
+                               .frame(alignment: .center)
+@@ -358,6 +371,8 @@ struct ContentView: View {
+                         NotchHomeView(albumArtNamespace: albumArtNamespace)
+                     case .shelf:
+                         ShelfView()
++                    case .timer:
++                        NotchTimerView()
+                     }
+                 }
+                 .transition(
+diff --git a/boringNotch/Info.plist b/boringNotch/Info.plist
+index 4e47627..5b00915 100644
+--- a/boringNotch/Info.plist
++++ b/boringNotch/Info.plist
+@@ -11,8 +11,6 @@
+ 	<true/>
+ 	<key>SUEnableInstallerLauncherService</key>
+ 	<true/>
+-	<key>SUFeedURL</key>
+-	<string>https://TheBoredTeam.github.io/boring.notch/appcast.xml</string>
+ 	<key>SUPublicEDKey</key>
+ 	<string>B1Y47t8C/v8ImurYA+9arEsuCrpxwJSviekiflMElbI=</string>
+ 	<key>UTImportedTypeDeclarations</key>
+diff --git a/boringNotch/XPCHelperClient/XPCHelperClient.swift b/boringNotch/XPCHelperClient/XPCHelperClient.swift
+index 29d5800..15a2ff8 100644
+--- a/boringNotch/XPCHelperClient/XPCHelperClient.swift
++++ b/boringNotch/XPCHelperClient/XPCHelperClient.swift
+@@ -5,7 +5,7 @@ import AsyncXPCConnection
+ final class XPCHelperClient {
+     nonisolated static let shared = XPCHelperClient()
+     
+-    private let serviceName = "theboringteam.boringnotch.BoringNotchXPCHelper"
++    private let serviceName = "local.notchtimer.boringnotch.BoringNotchXPCHelper"
+     
+     private var remoteService: RemoteXPCService<BoringNotchXPCHelperProtocol>?
+     private var connection: NSXPCConnection?
+diff --git a/boringNotch/boringNotchApp.swift b/boringNotch/boringNotchApp.swift
+index 8d8c348..239fdb6 100644
+--- a/boringNotch/boringNotchApp.swift
++++ b/boringNotch/boringNotchApp.swift
+@@ -22,7 +22,7 @@ struct DynamicNotchApp: App {
+ 
+     init() {
+         updaterController = SPUStandardUpdaterController(
+-            startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
++            startingUpdater: false, updaterDelegate: nil, userDriverDelegate: nil)
+ 
+         // Initialize the settings window controller with the updater controller
+         SettingsWindowController.shared.setUpdaterController(updaterController)
+diff --git a/boringNotch/components/Live activities/TimerFeature.swift b/boringNotch/components/Live activities/TimerFeature.swift
+new file mode 100644
+index 0000000..7f37e50
+--- /dev/null
++++ b/boringNotch/components/Live activities/TimerFeature.swift	
+@@ -0,0 +1,466 @@
++//
++//  TimerFeature.swift
++//  boringNotch
++//
++//  A simple countdown timer: the manager (state + sound), the "Timer" tab
++//  shown when the notch is open, and the small indicator shown next to the
++//  notch while the notch is closed.
++//
++//  Note: the notch window can never become the key window, so there is no
++//  keyboard input here. Custom times are set with the plus/minus buttons.
++//
++
++import AppKit
++import Combine
++import SwiftUI
++
++// MARK: - Manager
++
++@MainActor
++final class TimerManager: ObservableObject {
++    static let shared = TimerManager()
++
++    enum Phase {
++        case idle
++        case running
++        case paused
++        case finished
++    }
++
++    @Published private(set) var phase: Phase = .idle
++    /// Length of the current timer in seconds.
++    @Published private(set) var totalSeconds: TimeInterval = 0
++    /// Seconds left. Updated about once per second while running.
++    @Published private(set) var remainingSeconds: TimeInterval = 0
++    /// Goes up by one every time a timer finishes, so views can react once per finish.
++    @Published private(set) var finishCount: Int = 0
++
++    private var endDate: Date?
++    private var tickCancellable: AnyCancellable?
++    private var alertTask: Task<Void, Never>?
++
++    /// True while a timer is running, paused or waiting to be dismissed.
++    var isActive: Bool { phase != .idle }
++
++    /// Fraction of the timer that is left: 1 right after the start, 0 when done.
++    var fractionLeft: Double {
++        guard totalSeconds > 0 else { return 0 }
++        return min(1, max(0, remainingSeconds / totalSeconds))
++    }
++
++    private init() {}
++
++    // MARK: Controls
++
++    func start(seconds: TimeInterval) {
++        guard seconds > 0 else { return }
++        stopAlert()
++        totalSeconds = seconds
++        remainingSeconds = seconds
++        endDate = Date().addingTimeInterval(seconds)
++        phase = .running
++        startTicking()
++    }
++
++    func pause() {
++        guard phase == .running, let currentEnd = endDate else { return }
++        remainingSeconds = max(0, currentEnd.timeIntervalSinceNow)
++        endDate = nil
++        stopTicking()
++        phase = .paused
++    }
++
++    func resume() {
++        guard phase == .paused, remainingSeconds > 0 else { return }
++        endDate = Date().addingTimeInterval(remainingSeconds)
++        phase = .running
++        startTicking()
++    }
++
++    /// Stops a running or paused timer, or dismisses a finished one.
++    func cancel() {
++        stopTicking()
++        stopAlert()
++        endDate = nil
++        remainingSeconds = 0
++        totalSeconds = 0
++        phase = .idle
++    }
++
++    // MARK: Ticking
++
++    private func startTicking() {
++        stopTicking()
++        tickCancellable = Timer.publish(every: 0.2, on: .main, in: .common)
++            .autoconnect()
++            .sink { [weak self] _ in
++                Task { @MainActor in
++                    self?.tick()
++                }
++            }
++    }
++
++    private func stopTicking() {
++        tickCancellable?.cancel()
++        tickCancellable = nil
++    }
++
++    private func tick() {
++        guard phase == .running, let currentEnd = endDate else { return }
++        let left = currentEnd.timeIntervalSinceNow
++        if left <= 0 {
++            finish()
++        } else if left.rounded(.up) != remainingSeconds.rounded(.up) {
++            // Only publish when the displayed second changes, to keep redraws cheap.
++            remainingSeconds = left
++        }
++    }
++
++    private func finish() {
++        stopTicking()
++        endDate = nil
++        remainingSeconds = 0
++        phase = .finished
++        finishCount += 1
++        playAlert()
++    }
++
++    // MARK: Sound
++
++    /// Plays the sound four times, 2.5 seconds apart, unless the timer is dismissed first.
++    private func playAlert() {
++        stopAlert()
++        alertTask = Task { @MainActor in
++            for round in 0..<4 {
++                if Task.isCancelled { return }
++                Self.playSound()
++                if round < 3 {
++                    try? await Task.sleep(for: .seconds(2.5))
++                }
++            }
++        }
++    }
++
++    private func stopAlert() {
++        alertTask?.cancel()
++        alertTask = nil
++    }
++
++    private static func playSound() {
++        if let sound = NSSound(named: NSSound.Name("Glass")) {
++            sound.stop()
++            sound.play()
++        } else {
++            NSSound.beep()
++        }
++    }
++
++    // MARK: Formatting
++
++    /// "09:42", or "1:09:42" when an hour or more is left.
++    nonisolated static func clockString(_ seconds: TimeInterval) -> String {
++        let total = max(0, Int(seconds.rounded(.up)))
++        let hours = total / 3600
++        let minutes = (total % 3600) / 60
++        let secs = total % 60
++        if hours > 0 {
++            return String(format: "%d:%02d:%02d", hours, minutes, secs)
++        }
++        return String(format: "%02d:%02d", minutes, secs)
++    }
++}
++
++// MARK: - Closed notch indicator
++
++enum TimerLayout {
++    /// Width of the icon area (left) and the time area (right) beside the notch.
++    static let sideWidth: CGFloat = 60
++}
++
++/// Small indicator shown while the notch is closed: icon on the left, time on the right.
++struct TimerLiveActivity: View {
++    let notchWidth: CGFloat
++    let height: CGFloat
++
++    @ObservedObject var timer = TimerManager.shared
++
++    var body: some View {
++        HStack {
++            Image(systemName: iconName)
++                .font(.system(size: 12, weight: .semibold))
++                .foregroundStyle(tint)
++                .frame(width: TimerLayout.sideWidth, alignment: .center)
++
++            Rectangle()
++                .fill(.black)
++                .frame(width: notchWidth - cornerRadiusInsets.closed.top)
++
++            Text(label)
++                .font(.system(size: 12, weight: .semibold, design: .rounded))
++                .monospacedDigit()
++                .lineLimit(1)
++                .minimumScaleFactor(0.7)
++                .foregroundStyle(tint)
++                .frame(width: TimerLayout.sideWidth, alignment: .center)
++        }
++        .frame(height: height, alignment: .center)
++    }
++
++    private var iconName: String {
++        switch timer.phase {
++        case .paused: return "pause.fill"
++        case .finished: return "bell.fill"
++        default: return "timer"
++        }
++    }
++
++    private var tint: Color {
++        switch timer.phase {
++        case .paused: return Color.gray
++        case .finished: return Color.green
++        default: return Color.white
++        }
++    }
++
++    private var label: String {
++        if timer.phase == .finished {
++            return "Done"
++        }
++        return TimerManager.clockString(timer.remainingSeconds)
++    }
++}
++
++// MARK: - Open notch tab
++
++struct NotchTimerView: View {
++    @ObservedObject var timer = TimerManager.shared
++
++    @State private var showCustom = false
++    @State private var customMinutes = 25
++    @State private var customSeconds = 0
++
++    private let presets = [5, 10, 15, 30]
++
++    var body: some View {
++        Group {
++            switch timer.phase {
++            case .idle:
++                if showCustom {
++                    customPicker
++                } else {
++                    presetPicker
++                }
++            case .running, .paused:
++                runningView
++            case .finished:
++                finishedView
++            }
++        }
++        .foregroundStyle(.white)
++        .frame(maxWidth: .infinity, maxHeight: .infinity)
++        .animation(.smooth(duration: 0.25), value: timer.phase)
++        .animation(.smooth(duration: 0.25), value: showCustom)
++    }
++
++    // MARK: Idle: presets
++
++    private var presetPicker: some View {
++        VStack(spacing: 14) {
++            HStack(spacing: 10) {
++                ForEach(presets, id: \.self) { minutes in
++                    Button {
++                        timer.start(seconds: TimeInterval(minutes * 60))
++                    } label: {
++                        VStack(spacing: 0) {
++                            Text("\(minutes)")
++                                .font(.system(size: 22, weight: .semibold, design: .rounded))
++                            Text("min")
++                                .font(.system(size: 10, weight: .medium))
++                                .foregroundStyle(Color.gray)
++                        }
++                        .frame(width: 72, height: 54)
++                        .background(
++                            RoundedRectangle(cornerRadius: 16, style: .continuous)
++                                .fill(Color.white.opacity(0.12))
++                        )
++                        .contentShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
++                    }
++                    .buttonStyle(PlainButtonStyle())
++                }
++            }
++
++            Button {
++                showCustom = true
++            } label: {
++                HStack(spacing: 6) {
++                    Image(systemName: "slider.horizontal.3")
++                    Text("Custom time")
++                }
++                .font(.system(size: 12, weight: .medium))
++                .padding(.horizontal, 14)
++                .frame(height: 28)
++                .background(Capsule().fill(Color.white.opacity(0.12)))
++                .contentShape(Capsule())
++            }
++            .buttonStyle(PlainButtonStyle())
++        }
++    }
++
++    // MARK: Idle: custom time
++
++    private var customPicker: some View {
++        VStack(spacing: 10) {
++            HStack(spacing: 22) {
++                stepperRow(value: $customMinutes, unit: "min", range: 0...180, step: 1, bigStep: 5)
++                stepperRow(value: $customSeconds, unit: "sec", range: 0...55, step: 5, bigStep: 15)
++            }
++
++            HStack(spacing: 10) {
++                Button {
++                    showCustom = false
++                } label: {
++                    pill("Back")
++                }
++                .buttonStyle(PlainButtonStyle())
++
++                Button {
++                    let total = customMinutes * 60 + customSeconds
++                    if total > 0 {
++                        timer.start(seconds: TimeInterval(total))
++                        showCustom = false
++                    }
++                } label: {
++                    pill("Start", prominent: true)
++                }
++                .buttonStyle(PlainButtonStyle())
++                .opacity(customMinutes * 60 + customSeconds > 0 ? 1 : 0.4)
++            }
++
++            Text("Tip: hold ⌥ while clicking for bigger steps")
++                .font(.system(size: 9))
++                .foregroundStyle(Color.gray)
++        }
++    }
++
++    private func stepperRow(
++        value: Binding<Int>, unit: String, range: ClosedRange<Int>, step: Int, bigStep: Int
++    ) -> some View {
++        HStack(spacing: 8) {
++            stepButton("minus") {
++                adjust(value, direction: -1, step: step, bigStep: bigStep, range: range)
++            }
++
++            VStack(spacing: 0) {
++                Text(String(format: "%02d", value.wrappedValue))
++                    .font(.system(size: 28, weight: .semibold, design: .rounded))
++                    .monospacedDigit()
++                Text(unit)
++                    .font(.system(size: 10, weight: .medium))
++                    .foregroundStyle(Color.gray)
++            }
++            .frame(width: 44)
++
++            stepButton("plus") {
++                adjust(value, direction: 1, step: step, bigStep: bigStep, range: range)
++            }
++        }
++    }
++
++    private func adjust(
++        _ value: Binding<Int>, direction: Int, step: Int, bigStep: Int, range: ClosedRange<Int>
++    ) {
++        let amount = NSEvent.modifierFlags.contains(.option) ? bigStep : step
++        let next = value.wrappedValue + direction * amount
++        value.wrappedValue = min(range.upperBound, max(range.lowerBound, next))
++    }
++
++    private func stepButton(_ systemName: String, action: @escaping () -> Void) -> some View {
++        Button(action: action) {
++            Image(systemName: systemName)
++                .font(.system(size: 12, weight: .bold))
++                .frame(width: 28, height: 28)
++                .background(Circle().fill(Color.white.opacity(0.12)))
++                .contentShape(Circle())
++        }
++        .buttonStyle(PlainButtonStyle())
++    }
++
++    // MARK: Running / paused
++
++    private var runningView: some View {
++        HStack(spacing: 30) {
++            ZStack {
++                Circle()
++                    .stroke(Color.white.opacity(0.12), lineWidth: 6)
++                Circle()
++                    .trim(from: 0, to: timer.fractionLeft)
++                    .stroke(
++                        timer.phase == .paused ? Color.gray : Color.accentColor,
++                        style: StrokeStyle(lineWidth: 6, lineCap: .round)
++                    )
++                    .rotationEffect(.degrees(-90))
++                    .animation(.linear(duration: 1), value: timer.remainingSeconds)
++                Text(TimerManager.clockString(timer.remainingSeconds))
++                    .font(.system(size: 20, weight: .semibold, design: .rounded))
++                    .monospacedDigit()
++                    .lineLimit(1)
++                    .minimumScaleFactor(0.6)
++                    .padding(.horizontal, 12)
++            }
++            .frame(width: 100, height: 100)
++
++            HStack(spacing: 14) {
++                roundButton(timer.phase == .paused ? "play.fill" : "pause.fill") {
++                    if timer.phase == .paused {
++                        timer.resume()
++                    } else {
++                        timer.pause()
++                    }
++                }
++                roundButton("xmark") {
++                    timer.cancel()
++                }
++            }
++        }
++    }
++
++    private func roundButton(_ systemName: String, action: @escaping () -> Void) -> some View {
++        Button(action: action) {
++            Image(systemName: systemName)
++                .font(.system(size: 16, weight: .semibold))
++                .frame(width: 42, height: 42)
++                .background(Circle().fill(Color.white.opacity(0.12)))
++                .contentShape(Circle())
++        }
++        .buttonStyle(PlainButtonStyle())
++    }
++
++    // MARK: Finished
++
++    private var finishedView: some View {
++        VStack(spacing: 12) {
++            Image(systemName: "bell.fill")
++                .font(.system(size: 28))
++                .foregroundStyle(Color.green)
++            Text("Time's up")
++                .font(.system(size: 18, weight: .semibold, design: .rounded))
++            Button {
++                timer.cancel()
++            } label: {
++                pill("Done", prominent: true)
++            }
++            .buttonStyle(PlainButtonStyle())
++        }
++    }
++
++    // MARK: Shared
++
++    private func pill(_ title: String, prominent: Bool = false) -> some View {
++        Text(title)
++            .font(.system(size: 12, weight: .semibold))
++            .padding(.horizontal, 18)
++            .frame(height: 28)
++            .background(Capsule().fill(prominent ? Color.accentColor : Color.white.opacity(0.12)))
++            .contentShape(Capsule())
++    }
++}
+diff --git a/boringNotch/components/Tabs/TabSelectionView.swift b/boringNotch/components/Tabs/TabSelectionView.swift
+index b99d4af..97a27d5 100644
+--- a/boringNotch/components/Tabs/TabSelectionView.swift
++++ b/boringNotch/components/Tabs/TabSelectionView.swift
+@@ -16,7 +16,8 @@ struct TabModel: Identifiable {
+ 
+ let tabs = [
+     TabModel(label: "Home", icon: "house.fill", view: .home),
+-    TabModel(label: "Shelf", icon: "tray.fill", view: .shelf)
++    TabModel(label: "Shelf", icon: "tray.fill", view: .shelf),
++    TabModel(label: "Timer", icon: "timer", view: .timer)
+ ]
+ 
+ struct TabSelectionView: View {
+diff --git a/boringNotch/enums/generic.swift b/boringNotch/enums/generic.swift
+index e70b459..412f490 100644
+--- a/boringNotch/enums/generic.swift
++++ b/boringNotch/enums/generic.swift
+@@ -27,6 +27,7 @@ public enum NotchState {
+ public enum NotchViews {
+     case home
+     case shelf
++    case timer
+ }
+ 
+ enum SettingsEnum {
+diff --git a/boringNotch/models/BoringViewModel.swift b/boringNotch/models/BoringViewModel.swift
+--- a/boringNotch/models/BoringViewModel.swift	2026-11-05 19:24:38
++++ b/boringNotch/models/BoringViewModel.swift	2026-11-05 19:24:38
+@@ -209,9 +209,17 @@
+         self.coordinator.sneakPeek.show = false
+         self.edgeAutoOpenActive = false
+ 
++        // Timer addition: keep the Timer tab in front while a timer is running, paused or
++        // finished, so reopening the notch lands on the timer instead of Home.
++        let timerActive = Thread.isMainThread
++            ? MainActor.assumeIsolated { TimerManager.shared.isActive }
++            : false
++
+         // Set the current view to shelf if it contains files and the user enables openShelfByDefault
+         // Otherwise, if the user has not enabled openLastShelfByDefault, set the view to home
+-    if !ShelfStateViewModel.shared.isEmpty && Defaults[.openShelfByDefault] {
++        if timerActive {
++            coordinator.currentView = .timer
++        } else if !ShelfStateViewModel.shared.isEmpty && Defaults[.openShelfByDefault] {
+             coordinator.currentView = .shelf
+         } else if !coordinator.openLastTabByDefault {
+             coordinator.currentView = .home
+diff --git a/boringNotch.xcodeproj/project.pbxproj b/boringNotch.xcodeproj/project.pbxproj
+index 3caac47..041595e 100644
+--- a/boringNotch.xcodeproj/project.pbxproj
++++ b/boringNotch.xcodeproj/project.pbxproj
+@@ -116,6 +116,8 @@
+ 		9A987A102C73CA8D005CA465 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 9A987A0F2C73CA8D005CA465 /* Collections */; };
+ 		9AB0C6BD2C73C9CB00F7CD30 /* NotchHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB0C6BB2C73C9CB00F7CD30 /* NotchHomeView.swift */; };
+ 		A7F3C0D22E4B5A6900C1D2E4 /* TimerFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F3C0D12E4B5A6900C1D2E3 /* TimerFeature.swift */; };
++		A7F3C0D62E4B5A6900C1D2E8 /* DeviceBatteryFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F3C0D52E4B5A6900C1D2E7 /* DeviceBatteryFeature.swift */; };
++		A7F3C0D42E4B5A6900C1D2E6 /* SystemMonitorFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F3C0D32E4B5A6900C1D2E5 /* SystemMonitorFeature.swift */; };
+ 		B10348D92C74E56000475897 /* ConditionalModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10348D82C74E56000475897 /* ConditionalModifier.swift */; };
+ 		B10F84A32C6C9596009F3026 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10F84A22C6C9596009F3026 /* TestView.swift */; };
+ 		B141C2412CA5F53F00AC8CC8 /* SparkleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B141C2402CA5F53E00AC8CC8 /* SparkleView.swift */; };
+@@ -286,6 +288,8 @@
+ 		9A987A032C73CA66005CA465 /* ShelfView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShelfView.swift; sourceTree = "<group>"; };
+ 		9AB0C6BB2C73C9CB00F7CD30 /* NotchHomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotchHomeView.swift; sourceTree = "<group>"; };
+ 		A7F3C0D12E4B5A6900C1D2E3 /* TimerFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerFeature.swift; sourceTree = "<group>"; };
++		A7F3C0D52E4B5A6900C1D2E7 /* DeviceBatteryFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceBatteryFeature.swift; sourceTree = "<group>"; };
++		A7F3C0D32E4B5A6900C1D2E5 /* SystemMonitorFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemMonitorFeature.swift; sourceTree = "<group>"; };
+ 		B10348D82C74E56000475897 /* ConditionalModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionalModifier.swift; sourceTree = "<group>"; };
+ 		B10F84A22C6C9596009F3026 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+ 		B141C2402CA5F53E00AC8CC8 /* SparkleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkleView.swift; sourceTree = "<group>"; };
+@@ -747,6 +751,8 @@
+ 				B1D365CF2C6A9A6C0047BDBC /* SystemEventIndicatorModifier.swift */,
+ 				14E9FEA92C70BF610062E83F /* DownloadView.swift */,
+ 				A7F3C0D12E4B5A6900C1D2E3 /* TimerFeature.swift */,
++				A7F3C0D52E4B5A6900C1D2E7 /* DeviceBatteryFeature.swift */,
++				A7F3C0D32E4B5A6900C1D2E5 /* SystemMonitorFeature.swift */,
+ 				B172AABF2C95DA0B001623F1 /* InlineHUD.swift */,
+ 			);
+ 			path = "Live activities";
+@@ -974,6 +980,8 @@
+ 				B172AAC02C95DA0B001623F1 /* InlineHUD.swift in Sources */,
+ 				14E9FEAA2C70BF610062E83F /* DownloadView.swift in Sources */,
+ 				A7F3C0D22E4B5A6900C1D2E4 /* TimerFeature.swift in Sources */,
++				A7F3C0D62E4B5A6900C1D2E8 /* DeviceBatteryFeature.swift in Sources */,
++				A7F3C0D42E4B5A6900C1D2E6 /* SystemMonitorFeature.swift in Sources */,
+ 				B1B112912C6A572100093D8F /* EditPanelView.swift in Sources */,
+ 				B1C4489B2C97376A001F0858 /* TipStore.swift in Sources */,
+ 				1153BD912D986DB300979FB0 /* PlaybackState.swift in Sources */,
+@@ -1252,7 +1260,6 @@
+ 				INFOPLIST_KEY_LSUIElement = YES;
+ 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "This app uses AppleEvents to control music";
+ 				INFOPLIST_KEY_NSCalendarsUsageDescription = "This app uses the calendar to display your calendar events";
+-				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses the camera to display a live camera view";
+ 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+ 				INFOPLIST_KEY_NSRemindersUsageDescription = "This app uses Reminders to display your scheduled reminder in the calendar";
+ 				LD_RUNPATH_SEARCH_PATHS = (
+@@ -1305,7 +1312,6 @@
+ 				INFOPLIST_KEY_LSUIElement = YES;
+ 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "This app uses AppleEvents to control music";
+ 				INFOPLIST_KEY_NSCalendarsUsageDescription = "This app uses the calendar to display your calendar events";
+-				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses the camera to display a live camera view";
+ 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+ 				INFOPLIST_KEY_NSRemindersUsageDescription = "This app uses Reminders to display your scheduled reminder in the calendar";
+ 				LD_RUNPATH_SEARCH_PATHS = (
+diff --git a/boringNotch/ContentView.swift b/boringNotch/ContentView.swift
+index 968bb38..8a9a52e 100644
+--- a/boringNotch/ContentView.swift
++++ b/boringNotch/ContentView.swift
+@@ -24,6 +24,7 @@ struct ContentView: View {
+     @ObservedObject var brightnessManager = BrightnessManager.shared
+     @ObservedObject var volumeManager = VolumeManager.shared
+     @ObservedObject var timerManager = TimerManager.shared
++    @Default(.systemMonitorInClosedNotch) var systemMonitorInClosedNotch
+     @State private var hoverTask: Task<Void, Never>?
+     @State private var isHovering: Bool = false
+     @State private var anyDropDebounceTask: Task<Void, Never>?
+@@ -73,6 +74,10 @@ struct ContentView: View {
+             && coordinator.musicLiveActivityEnabled && !vm.hideOnClosed
+         {
+             chinWidth += (2 * max(0, vm.effectiveClosedNotchHeight - 12) + 20)
++        } else if systemMonitorInClosedNotch && !coordinator.expandingView.show && vm.notchState == .closed
++            && (!musicManager.isPlaying && musicManager.isPlayerIdle) && !vm.hideOnClosed
++        {
++            chinWidth += (2 * SystemMonitorLayout.sideWidth + 20)
+         } else if !coordinator.expandingView.show && vm.notchState == .closed
+             && (!musicManager.isPlaying && musicManager.isPlayerIdle) && Defaults[.showNotHumanFace]
+             && !vm.hideOnClosed
+@@ -312,6 +317,12 @@ struct ContentView: View {
+                       } else if (!coordinator.expandingView.show || coordinator.expandingView.type == .music) && vm.notchState == .closed && (musicManager.isPlaying || !musicManager.isPlayerIdle) && coordinator.musicLiveActivityEnabled && !vm.hideOnClosed {
+                           MusicLiveActivity()
+                               .frame(alignment: .center)
++                      } else if systemMonitorInClosedNotch && !coordinator.expandingView.show && vm.notchState == .closed && (!musicManager.isPlaying && musicManager.isPlayerIdle) && !vm.hideOnClosed {
++                          SystemMonitorLiveActivity(
++                              notchWidth: vm.closedNotchSize.width,
++                              height: vm.effectiveClosedNotchHeight
++                          )
++                          .frame(alignment: .center)
+                       } else if !coordinator.expandingView.show && vm.notchState == .closed && (!musicManager.isPlaying && musicManager.isPlayerIdle) && Defaults[.showNotHumanFace] && !vm.hideOnClosed  {
+                           BoringFaceAnimation()
+                        } else if vm.notchState == .open {
+@@ -373,6 +384,8 @@ struct ContentView: View {
+                         ShelfView()
+                     case .timer:
+                         NotchTimerView()
++                    case .system:
++                        NotchSystemView()
+                     }
+                 }
+                 .transition(
+diff --git a/boringNotch/boringNotch.entitlements b/boringNotch/boringNotch.entitlements
+index 7f3881d..17a6884 100644
+--- a/boringNotch/boringNotch.entitlements
++++ b/boringNotch/boringNotch.entitlements
+@@ -6,8 +6,6 @@
+ 	<true/>
+ 	<key>com.apple.security.automation.apple-events</key>
+ 	<true/>
+-	<key>com.apple.security.device.camera</key>
+-	<true/>
+ 	<key>com.apple.security.personal-information.calendars</key>
+ 	<true/>
+ 	<key>com.apple.security.files.bookmarks.app-scope</key>
+diff --git a/boringNotch/components/Live activities/DeviceBatteryFeature.swift b/boringNotch/components/Live activities/DeviceBatteryFeature.swift
+new file mode 100644
+index 0000000..131fc2c
+--- /dev/null
++++ b/boringNotch/components/Live activities/DeviceBatteryFeature.swift	
+@@ -0,0 +1,253 @@
++//
++//  DeviceBatteryFeature.swift
++//  boringNotch
++//
++//  Battery levels of connected Bluetooth accessories (AirPods, Magic Keyboard,
++//  Magic Mouse, Magic Trackpad, Beats, game controllers, ...), shown in the
++//  "System" tab next to the CPU / RAM gauges.
++//
++//  How it works, and why it needs no permission:
++//  macOS publishes battery information for connected accessories in the
++//  IORegistry (the same data System Settings > Bluetooth shows). This file
++//  reads those entries with the public IOKit API. It never opens a Bluetooth
++//  connection, never scans for devices and never uses CoreBluetooth or
++//  IOBluetooth, so no Bluetooth permission or entitlement is involved.
++//  Only accessories that report their battery to macOS appear here; iPhones
++//  and iPads do not (macOS offers no public API for that).
++//
++//  Read-only and local: no network, no files, no logging.
++//
++
++import Defaults
++import IOKit
++import SwiftUI
++
++// MARK: - Model
++
++struct BluetoothDeviceBattery: Identifiable, Equatable {
++    struct Level: Equatable {
++        let label: String   // "", "L", "R" or "Case"
++        let percent: Int
++    }
++
++    let id: String
++    let name: String
++    let symbol: String
++    let levels: [Level]
++
++    /// Lowest level, used for sorting and for the summary colour.
++    var minimumPercent: Int { levels.map(\.percent).min() ?? 0 }
++}
++
++// MARK: - Reader
++
++@MainActor
++final class DeviceBatteryMonitor: ObservableObject {
++    static let shared = DeviceBatteryMonitor()
++
++    @Published private(set) var devices: [BluetoothDeviceBattery] = []
++
++    private var observers = 0
++    private var timer: Timer?
++
++    private init() {}
++
++    func beginObserving() {
++        observers += 1
++        if observers == 1 {
++            refresh()
++            // Battery levels change slowly; every 10 s is plenty.
++            timer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { [weak self] _ in
++                Task { @MainActor in self?.refresh() }
++            }
++        }
++    }
++
++    func endObserving() {
++        observers = max(0, observers - 1)
++        if observers == 0 {
++            timer?.invalidate()
++            timer = nil
++        }
++    }
++
++    func refresh() {
++        let found = Self.readDevices()
++        if found != devices {
++            devices = found
++        }
++    }
++
++    // MARK: IORegistry
++
++    nonisolated private static let serviceClass = "AppleDeviceManagementHIDEventService"
++
++    nonisolated private static func readDevices() -> [BluetoothDeviceBattery] {
++        var iterator: io_iterator_t = 0
++        guard IOServiceGetMatchingServices(kIOMainPortDefault, IOServiceMatching(serviceClass), &iterator) == KERN_SUCCESS else {
++            return []
++        }
++        defer { IOObjectRelease(iterator) }
++
++        var result: [BluetoothDeviceBattery] = []
++        var seen = Set<String>()
++
++        var entry = IOIteratorNext(iterator)
++        while entry != 0 {
++            defer {
++                IOObjectRelease(entry)
++                entry = IOIteratorNext(iterator)
++            }
++
++            var unmanaged: Unmanaged<CFMutableDictionary>?
++            guard IORegistryEntryCreateCFProperties(entry, &unmanaged, kCFAllocatorDefault, 0) == KERN_SUCCESS,
++                  let properties = unmanaged?.takeRetainedValue() as? [String: Any]
++            else { continue }
++
++            // Only wireless accessories: skip the built-in keyboard/trackpad and wired devices.
++            let transport = properties["Transport"] as? String ?? ""
++            let isBluetooth = transport == "Bluetooth" || (properties["BluetoothDevice"] as? Bool ?? false)
++            guard isBluetooth else { continue }
++
++            var levels: [BluetoothDeviceBattery.Level] = []
++            if let left = percent(properties["BatteryPercentLeft"]) { levels.append(.init(label: "L", percent: left)) }
++            if let right = percent(properties["BatteryPercentRight"]) { levels.append(.init(label: "R", percent: right)) }
++            if let box = percent(properties["BatteryPercentCase"]) { levels.append(.init(label: "Case", percent: box)) }
++            if levels.isEmpty, let single = percent(properties["BatteryPercent"]) {
++                levels.append(.init(label: "", percent: single))
++            }
++            guard !levels.isEmpty else { continue }
++
++            let address = properties["DeviceAddress"] as? String
++                ?? properties["SerialNumber"] as? String
++                ?? UUID().uuidString
++            guard !seen.contains(address) else { continue }
++            seen.insert(address)
++
++            let rawName = (properties["Product"] as? String)?.trimmingCharacters(in: .whitespaces) ?? ""
++            let name = rawName.isEmpty ? "Bluetooth device" : rawName
++
++            result.append(
++                BluetoothDeviceBattery(
++                    id: address,
++                    name: name,
++                    symbol: symbol(for: name, properties: properties),
++                    levels: levels
++                )
++            )
++        }
++
++        return result.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
++    }
++
++    nonisolated private static func percent(_ value: Any?) -> Int? {
++        guard let number = value as? NSNumber else { return nil }
++        let level = number.intValue
++        // Some drivers report 0 or values > 100 while a reading is unavailable.
++        guard (1...100).contains(level) else { return nil }
++        return level
++    }
++
++    nonisolated private static func symbol(for name: String, properties: [String: Any]) -> String {
++        let lower = name.lowercased()
++        if lower.contains("airpods max") { return "airpodsmax" }
++        if lower.contains("airpods pro") { return "airpodspro" }
++        if lower.contains("airpods") { return "airpods" }
++        if lower.contains("beats") { return "beats.headphones" }
++        if lower.contains("keyboard") { return "keyboard" }
++        if lower.contains("mouse") { return "magicmouse" }
++        if lower.contains("trackpad") { return "rectangle.and.hand.point.up.left.fill" }
++        if lower.contains("controller") || lower.contains("gamepad") { return "gamecontroller" }
++        if lower.contains("headphone") || lower.contains("headset") || lower.contains("buds") { return "headphones" }
++        if properties["BatteryPercentLeft"] != nil || properties["BatteryPercentCase"] != nil { return "airpods" }
++        return "dot.radiowaves.left.and.right"
++    }
++}
++
++// MARK: - View
++
++/// The device list shown in the System tab.
++struct DeviceBatteryListView: View {
++    @ObservedObject var monitor = DeviceBatteryMonitor.shared
++
++    var body: some View {
++        VStack(alignment: .leading, spacing: 6) {
++            HStack(spacing: 6) {
++                Image(systemName: "wave.3.right")
++                    .font(.system(size: 10, weight: .semibold))
++                Text("Bluetooth devices")
++                    .font(.system(size: 11, weight: .semibold))
++                Spacer()
++            }
++            .foregroundStyle(Color.gray)
++
++            if monitor.devices.isEmpty {
++                VStack(spacing: 4) {
++                    Image(systemName: "wave.3.right.circle")
++                        .font(.system(size: 20))
++                    Text("No connected devices report a battery level")
++                        .font(.system(size: 10))
++                        .multilineTextAlignment(.center)
++                }
++                .foregroundStyle(Color.gray)
++                .frame(maxWidth: .infinity, maxHeight: .infinity)
++            } else {
++                ScrollView(.vertical) {
++                    VStack(spacing: 6) {
++                        ForEach(monitor.devices) { device in
++                            deviceRow(device)
++                        }
++                    }
++                }
++                .scrollIndicators(.never)
++            }
++        }
++        .onAppear { monitor.beginObserving() }
++        .onDisappear { monitor.endObserving() }
++    }
++
++    private func deviceRow(_ device: BluetoothDeviceBattery) -> some View {
++        HStack(spacing: 10) {
++            Image(systemName: device.symbol)
++                .font(.system(size: 15))
++                .frame(width: 22)
++
++            Text(device.name)
++                .font(.system(size: 11, weight: .medium))
++                .lineLimit(1)
++                .truncationMode(.tail)
++
++            Spacer(minLength: 6)
++
++            HStack(spacing: 8) {
++                ForEach(device.levels, id: \.label) { level in
++                    HStack(spacing: 3) {
++                        if !level.label.isEmpty {
++                            Text(level.label)
++                                .font(.system(size: 9, weight: .medium))
++                                .foregroundStyle(Color.gray)
++                        }
++                        // Same battery glyph the app already uses for the Mac's own battery.
++                        BatteryView(
++                            levelBattery: Float(level.percent),
++                            isPluggedIn: false,
++                            isCharging: false,
++                            isInLowPowerMode: false,
++                            batteryWidth: 22,
++                            isForNotification: false
++                        )
++                        Text("\(level.percent)%")
++                            .font(.system(size: 10, weight: .semibold, design: .rounded))
++                            .monospacedDigit()
++                    }
++                }
++            }
++        }
++        .padding(.horizontal, 10)
++        .padding(.vertical, 6)
++        .background(
++            RoundedRectangle(cornerRadius: 10, style: .continuous)
++                .fill(Color.white.opacity(0.08))
++        )
++    }
++}
+diff --git a/boringNotch/components/Live activities/SystemMonitorFeature.swift b/boringNotch/components/Live activities/SystemMonitorFeature.swift
+new file mode 100644
+index 0000000..fc8913a
+--- /dev/null
++++ b/boringNotch/components/Live activities/SystemMonitorFeature.swift	
+@@ -0,0 +1,257 @@
++//
++//  SystemMonitorFeature.swift
++//  boringNotch
++//
++//  A small, read-only CPU / memory monitor: the sampler (Mach host statistics),
++//  the "System" tab shown when the notch is open, and an optional compact
++//  indicator next to the closed notch (off by default).
++//
++//  Privacy/safety notes:
++//  - Uses only public, local macOS APIs (host_statistics / host_statistics64).
++//  - No network, no files, no logging, no new entitlements.
++//  - Sampling runs only while something is actually showing the numbers.
++//
++
++import Darwin
++import Defaults
++import SwiftUI
++
++extension Defaults.Keys {
++    /// Show "CPU xx% / RAM x/y GB" next to the closed notch. Default: off.
++    static let systemMonitorInClosedNotch = Key<Bool>("systemMonitorInClosedNotch", default: false)
++}
++
++// MARK: - Sampler
++
++@MainActor
++final class SystemMonitor: ObservableObject {
++    static let shared = SystemMonitor()
++
++    /// 0...1
++    @Published private(set) var cpuUsage: Double = 0
++    /// Bytes
++    @Published private(set) var memoryUsed: UInt64 = 0
++    /// Bytes
++    @Published private(set) var memoryTotal: UInt64 = ProcessInfo.processInfo.physicalMemory
++
++    var memoryFraction: Double {
++        guard memoryTotal > 0 else { return 0 }
++        return min(1, Double(memoryUsed) / Double(memoryTotal))
++    }
++
++    private var observers = 0
++    private var timer: Timer?
++    private var lastTicks: (busy: UInt64, total: UInt64)?
++
++    private init() {}
++
++    // Views call these from onAppear / onDisappear. Sampling only runs while
++    // at least one view is visible.
++    func beginObserving() {
++        observers += 1
++        if observers == 1 {
++            sample()
++            timer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: true) { [weak self] _ in
++                Task { @MainActor in self?.sample() }
++            }
++        }
++    }
++
++    func endObserving() {
++        observers = max(0, observers - 1)
++        if observers == 0 {
++            timer?.invalidate()
++            timer = nil
++            lastTicks = nil
++        }
++    }
++
++    private func sample() {
++        sampleCPU()
++        sampleMemory()
++    }
++
++    private func sampleCPU() {
++        var info = host_cpu_load_info_data_t()
++        var count = mach_msg_type_number_t(
++            MemoryLayout<host_cpu_load_info_data_t>.size / MemoryLayout<integer_t>.size)
++        let result = withUnsafeMutablePointer(to: &info) { pointer in
++            pointer.withMemoryRebound(to: integer_t.self, capacity: Int(count)) { reboundPointer in
++                host_statistics(mach_host_self(), HOST_CPU_LOAD_INFO, reboundPointer, &count)
++            }
++        }
++        guard result == KERN_SUCCESS else { return }
++
++        let user = UInt64(info.cpu_ticks.0)
++        let system = UInt64(info.cpu_ticks.1)
++        let idle = UInt64(info.cpu_ticks.2)
++        let nice = UInt64(info.cpu_ticks.3)
++        let busy = user + system + nice
++        let total = busy + idle
++
++        if let last = lastTicks, total > last.total {
++            let deltaBusy = Double(busy - last.busy)
++            let deltaTotal = Double(total - last.total)
++            cpuUsage = min(1, max(0, deltaBusy / deltaTotal))
++        }
++        lastTicks = (busy, total)
++    }
++
++    private func sampleMemory() {
++        var stats = vm_statistics64_data_t()
++        var count = mach_msg_type_number_t(
++            MemoryLayout<vm_statistics64_data_t>.size / MemoryLayout<integer_t>.size)
++        let result = withUnsafeMutablePointer(to: &stats) { pointer in
++            pointer.withMemoryRebound(to: integer_t.self, capacity: Int(count)) { reboundPointer in
++                host_statistics64(mach_host_self(), HOST_VM_INFO64, reboundPointer, &count)
++            }
++        }
++        guard result == KERN_SUCCESS else { return }
++
++        let pageSize = UInt64(vm_kernel_page_size)
++        // Same idea as Activity Monitor's "Memory Used": app memory + wired + compressed.
++        let appPages = UInt64(max(0, Int64(stats.internal_page_count) - Int64(stats.purgeable_count)))
++        let usedPages = appPages + UInt64(stats.wire_count) + UInt64(stats.compressor_page_count)
++        memoryUsed = usedPages * pageSize
++        memoryTotal = ProcessInfo.processInfo.physicalMemory
++    }
++
++    // MARK: Formatting
++
++    nonisolated static func gigabytes(_ bytes: UInt64, decimals: Int = 1) -> String {
++        let value = Double(bytes) / 1_073_741_824
++        return String(format: "%.\(decimals)f", value)
++    }
++
++    nonisolated static func percent(_ fraction: Double) -> String {
++        "\(Int((fraction * 100).rounded()))%"
++    }
++}
++
++// MARK: - Closed notch indicator
++
++enum SystemMonitorLayout {
++    static let sideWidth: CGFloat = 74
++}
++
++/// Compact indicator next to the closed notch: CPU on the left, RAM on the right.
++struct SystemMonitorLiveActivity: View {
++    let notchWidth: CGFloat
++    let height: CGFloat
++
++    @ObservedObject var monitor = SystemMonitor.shared
++
++    var body: some View {
++        HStack {
++            HStack(spacing: 4) {
++                Image(systemName: "cpu")
++                    .font(.system(size: 11, weight: .semibold))
++                Text(SystemMonitor.percent(monitor.cpuUsage))
++                    .font(.system(size: 11, weight: .semibold, design: .rounded))
++                    .monospacedDigit()
++            }
++            .frame(width: SystemMonitorLayout.sideWidth, alignment: .center)
++
++            Rectangle()
++                .fill(.black)
++                .frame(width: notchWidth - cornerRadiusInsets.closed.top)
++
++            HStack(spacing: 4) {
++                Image(systemName: "memorychip")
++                    .font(.system(size: 11, weight: .semibold))
++                Text("\(SystemMonitor.gigabytes(monitor.memoryUsed, decimals: 0))/\(SystemMonitor.gigabytes(monitor.memoryTotal, decimals: 0))")
++                    .font(.system(size: 11, weight: .semibold, design: .rounded))
++                    .monospacedDigit()
++            }
++            .frame(width: SystemMonitorLayout.sideWidth, alignment: .center)
++        }
++        .foregroundStyle(.white)
++        .lineLimit(1)
++        .frame(height: height, alignment: .center)
++        .onAppear { monitor.beginObserving() }
++        .onDisappear { monitor.endObserving() }
++    }
++}
++
++// MARK: - Open notch tab
++
++struct NotchSystemView: View {
++    @ObservedObject var monitor = SystemMonitor.shared
++    @Default(.systemMonitorInClosedNotch) private var showInClosedNotch
++
++    var body: some View {
++        HStack(alignment: .top, spacing: 18) {
++            VStack(spacing: 10) {
++                HStack(spacing: 18) {
++                    gauge(
++                        title: "CPU",
++                        fraction: monitor.cpuUsage,
++                        value: SystemMonitor.percent(monitor.cpuUsage),
++                        detail: "\(ProcessInfo.processInfo.activeProcessorCount) cores",
++                        tint: tint(for: monitor.cpuUsage)
++                    )
++                    gauge(
++                        title: "RAM",
++                        fraction: monitor.memoryFraction,
++                        value: SystemMonitor.percent(monitor.memoryFraction),
++                        detail: "\(SystemMonitor.gigabytes(monitor.memoryUsed)) / \(SystemMonitor.gigabytes(monitor.memoryTotal, decimals: 0)) GB",
++                        tint: tint(for: monitor.memoryFraction)
++                    )
++                }
++
++                Toggle(isOn: $showInClosedNotch) {
++                    Text("Show next to closed notch")
++                        .font(.system(size: 10, weight: .medium))
++                        .foregroundStyle(Color.gray)
++                }
++                .toggleStyle(.switch)
++                .controlSize(.mini)
++                .tint(Color.accentColor)
++            }
++            .frame(width: 250)
++
++            DeviceBatteryListView()
++                .frame(maxWidth: .infinity, maxHeight: .infinity)
++        }
++        .foregroundStyle(.white)
++        .frame(maxWidth: .infinity, maxHeight: .infinity)
++        .onAppear { monitor.beginObserving() }
++        .onDisappear { monitor.endObserving() }
++    }
++
++    private func tint(for fraction: Double) -> Color {
++        if fraction >= 0.9 { return .red }
++        if fraction >= 0.7 { return .orange }
++        return Color.accentColor
++    }
++
++    private func gauge(title: String, fraction: Double, value: String, detail: String, tint: Color) -> some View {
++        VStack(spacing: 6) {
++            ZStack {
++                Circle()
++                    .stroke(Color.white.opacity(0.12), lineWidth: 6)
++                Circle()
++                    .trim(from: 0, to: max(0.001, fraction))
++                    .stroke(tint, style: StrokeStyle(lineWidth: 6, lineCap: .round))
++                    .rotationEffect(.degrees(-90))
++                    .animation(.smooth(duration: 0.6), value: fraction)
++                VStack(spacing: 0) {
++                    Text(value)
++                        .font(.system(size: 17, weight: .semibold, design: .rounded))
++                        .monospacedDigit()
++                    Text(title)
++                        .font(.system(size: 9, weight: .medium))
++                        .foregroundStyle(Color.gray)
++                }
++            }
++            .frame(width: 76, height: 76)
++
++            Text(detail)
++                .font(.system(size: 10, weight: .medium, design: .rounded))
++                .monospacedDigit()
++                .foregroundStyle(Color.gray)
++                .lineLimit(1)
++        }
++        .frame(width: 110)
++    }
++}
+diff --git a/boringNotch/components/Onboarding/OnboardingView.swift b/boringNotch/components/Onboarding/OnboardingView.swift
+index c4f8fbe..42266a2 100644
+--- a/boringNotch/components/Onboarding/OnboardingView.swift
++++ b/boringNotch/components/Onboarding/OnboardingView.swift
+@@ -31,7 +31,8 @@ struct OnboardingView: View {
+             case .welcome:
+                 WelcomeView {
+                     withAnimation(.easeInOut(duration: 0.6)) {
+-                        step = .cameraPermission
++                        // Camera-free build: skip the camera permission step entirely.
++                        step = .calendarPermission
+                     }
+                 }
+                 .transition(.opacity)
+@@ -144,7 +145,7 @@ struct OnboardingView: View {
+     // MARK: - Permission Request Logic
+ 
+     func requestCameraPermission() async {
+-        await AVCaptureDevice.requestAccess(for: .video)
++        // Camera-free build: never ask for camera access.
+     }
+ 
+     func requestCalendarPermission() async {
+diff --git a/boringNotch/components/Settings/SettingsView.swift b/boringNotch/components/Settings/SettingsView.swift
+index 8361252..f583476 100644
+--- a/boringNotch/components/Settings/SettingsView.swift
++++ b/boringNotch/components/Settings/SettingsView.swift
+@@ -5,7 +5,6 @@
+ //  Created by Richard Kunkli on 07/08/2024.
+ //
+ 
+-import AVFoundation
+ import Defaults
+ import EventKit
+ import KeyboardShortcuts
+@@ -1352,16 +1351,7 @@ struct Appearance: View {
+             }
+ 
+             Section {
+-                Defaults.Toggle(key: .showMirror) {
+-                    Text("Enable boring mirror")
+-                }
+-                    .disabled(!checkVideoInput())
+-                Picker("Mirror shape", selection: $mirrorShape) {
+-                    Text("Circle")
+-                        .tag(MirrorShapeEnum.circle)
+-                    Text("Square")
+-                        .tag(MirrorShapeEnum.rectangle)
+-                }
++                // Camera/mirror feature removed in this build: no camera access at all.
+                 Defaults.Toggle(key: .showNotHumanFace) {
+                     Text("Show cool face animation while inactive")
+                 }
+@@ -1375,13 +1365,6 @@ struct Appearance: View {
+         .navigationTitle("Appearance")
+     }
+ 
+-    func checkVideoInput() -> Bool {
+-        if AVCaptureDevice.default(for: .video) != nil {
+-            return true
+-        }
+-
+-        return false
+-    }
+ }
+ 
+ struct Advanced: View {
+diff --git a/boringNotch/components/Tabs/TabSelectionView.swift b/boringNotch/components/Tabs/TabSelectionView.swift
+index 97a27d5..10cc52e 100644
+--- a/boringNotch/components/Tabs/TabSelectionView.swift
++++ b/boringNotch/components/Tabs/TabSelectionView.swift
+@@ -17,7 +17,8 @@ struct TabModel: Identifiable {
+ let tabs = [
+     TabModel(label: "Home", icon: "house.fill", view: .home),
+     TabModel(label: "Shelf", icon: "tray.fill", view: .shelf),
+-    TabModel(label: "Timer", icon: "timer", view: .timer)
++    TabModel(label: "Timer", icon: "timer", view: .timer),
++    TabModel(label: "System", icon: "cpu", view: .system)
+ ]
+ 
+ struct TabSelectionView: View {
+diff --git a/boringNotch/enums/generic.swift b/boringNotch/enums/generic.swift
+index 412f490..2a6670b 100644
+--- a/boringNotch/enums/generic.swift
++++ b/boringNotch/enums/generic.swift
+@@ -28,6 +28,7 @@ public enum NotchViews {
+     case home
+     case shelf
+     case timer
++    case system
+ }
+ 
+ enum SettingsEnum {
+diff --git a/boringNotch/managers/WebcamManager.swift b/boringNotch/managers/WebcamManager.swift
+index fa771e0..7df3e48 100644
+--- a/boringNotch/managers/WebcamManager.swift
++++ b/boringNotch/managers/WebcamManager.swift
+@@ -2,312 +2,45 @@
+ //  WebcamManager.swift
+ //  boringNotch
+ //
+-//  Created by Harsh Vardhan  Goswami  on 19/08/24.
++//  Camera-free build: the mirror feature has been removed on purpose.
++//  This stub keeps the same public shape as the original manager so the rest
++//  of the app compiles, but it never touches AVCaptureDevice, never asks for
++//  camera permission and never starts a capture session. The app's
++//  entitlements no longer include camera access either.
+ //
++
+ import AVFoundation
+ import SwiftUI
+ 
+ class WebcamManager: NSObject, ObservableObject {
+     static let shared = WebcamManager()
+-    
+-    @Published var previewLayer: AVCaptureVideoPreviewLayer? {
+-        didSet {
+-            objectWillChange.send()
+-        }
+-    }
+-    
+-    private var captureSession: AVCaptureSession?
+-    @Published var isSessionRunning: Bool = false {
+-        didSet {
+-            objectWillChange.send()
+-        }
+-    }
+-    
+-    @Published var authorizationStatus: AVAuthorizationStatus = .notDetermined {
+-        didSet {
+-            objectWillChange.send()
+-        }
+-    }
+-    
+-    @Published var cameraAvailable: Bool = false {
+-        didSet {
+-            objectWillChange.send()
+-        }
+-    }
+ 
+-    private let sessionQueue = DispatchQueue(label: "BoringNotch.WebcamManager.SessionQueue", qos: .userInitiated)
+-    
+-    private var isCleaningUp: Bool = false
+-    
+-    // MARK: - Constants
+-    
+-    enum WebcamError: Error, LocalizedError {
+-        case deviceUnavailable
+-        case accessDenied
+-        case configurationFailed(String)
+-        
+-        var errorDescription: String? {
+-            switch self {
+-            case .deviceUnavailable:
+-                return "No camera devices available"
+-            case .accessDenied:
+-                return "Camera access denied"
+-            case .configurationFailed(let message):
+-                return "Camera configuration failed: \(message)"
+-            }
+-        }
+-    }
+-    
+-    // MARK: - Properties
+-    
++    /// Always nil: there is no capture session in this build.
++    @Published private(set) var previewLayer: AVCaptureVideoPreviewLayer? = nil
++    /// Always false.
++    @Published private(set) var isSessionRunning: Bool = false
++    /// Stays `.notDetermined` so no "access denied" alerts are shown anywhere.
++    @Published private(set) var authorizationStatus: AVAuthorizationStatus = .notDetermined
++    /// Always false, which hides every camera-related control in the UI.
++    @Published private(set) var cameraAvailable: Bool = false
++
+     private override init() {
+         super.init()
+-        NotificationCenter.default.addObserver(self, selector: #selector(deviceWasDisconnected), name: .AVCaptureDeviceWasDisconnected, object: nil)
+-        NotificationCenter.default.addObserver(self, selector: #selector(deviceWasConnected), name: .AVCaptureDeviceWasConnected, object: nil)
+-        checkCameraAvailability()
+-    }
+-    
+-    deinit {
+-        NotificationCenter.default.removeObserver(self)
+-        
+-        if let session = captureSession {
+-            if session.isRunning {
+-                session.stopRunning()
+-            }
+-        }
+-        captureSession = nil
+-            
+-        previewLayer = nil
+     }
+ 
+-    // MARK: - Camera Management
+-    
+-    /// Checks current authorization status and requests access if needed
+     func checkAndRequestVideoAuthorization() {
+-        let status = AVCaptureDevice.authorizationStatus(for: .video)
+-        DispatchQueue.main.async {
+-            self.authorizationStatus = status
+-        }
+-        
+-        switch status {
+-        case .authorized:
+-            checkCameraAvailability() // Check availability if authorized
+-        case .notDetermined:
+-            requestVideoAccess()
+-        case .denied, .restricted:
+-            NSLog("Camera access denied or restricted")
+-        @unknown default:
+-            NSLog("Unknown authorization status")
+-        }
+-    }
+-    
+-    /// Requests access to the camera
+-    private func requestVideoAccess() {
+-        AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
+-            DispatchQueue.main.async {
+-                self?.authorizationStatus = granted ? .authorized : .denied
+-                if granted {
+-                    self?.checkCameraAvailability() // Check availability if access granted
+-                }
+-            }
+-        }
+-    }
+-    
+-    /// Checks if any camera devices are available and sets up capture session if needed
+-    func checkCameraAvailability() {
+-        let availableDevices = AVCaptureDevice.DiscoverySession(
+-            deviceTypes: [.external, .builtInWideAngleCamera],
+-            mediaType: .video,
+-            position: .unspecified
+-        ).devices
+-        
+-        let hasAvailableDevices = !availableDevices.isEmpty
+-        
+-        DispatchQueue.main.async {
+-            self.cameraAvailable = hasAvailableDevices
+-        }
+-    }
+-    
+-    /// Sets up the capture session with a completion handler
+-    private func setupCaptureSession(completion: @escaping (Bool) -> Void) {
+-        sessionQueue.async { [weak self] in
+-            guard let self = self else { 
+-                completion(false)
+-                return 
+-            }
+-            
+-            // Clean up any existing session before creating a new one
+-            self.cleanupExistingSession()
+-            
+-            let session = AVCaptureSession()
+-            
+-            do {
+-                // Get available devices and prefer external camera if available
+-                let discoverySession = AVCaptureDevice.DiscoverySession(
+-                    deviceTypes: [.external, .builtInWideAngleCamera],
+-                    mediaType: .video,
+-                    position: .unspecified
+-                )
+-                
+-                guard let videoDevice = discoverySession.devices.first else {
+-                    NSLog("No video devices available")
+-                    DispatchQueue.main.async {
+-                        self.isSessionRunning = false
+-                        self.cameraAvailable = false
+-                    }
+-                    completion(false)
+-                    return
+-                }
+-                
+-                NSLog("Using camera: \(videoDevice.localizedName)")
+-                
+-                // Lock device for configuration
+-                try videoDevice.lockForConfiguration()
+-                defer { videoDevice.unlockForConfiguration() }
+-                
+-                let videoInput = try AVCaptureDeviceInput(device: videoDevice)
+-                guard session.canAddInput(videoInput) else {
+-                    throw NSError(domain: "BoringNotch.WebcamManager", code: -1, userInfo: [NSLocalizedDescriptionKey: "Cannot add video input"])
+-                }
+-                
+-                session.beginConfiguration()
+-                session.sessionPreset = .high
+-                session.addInput(videoInput)
+-                
+-                let videoOutput = AVCaptureVideoDataOutput()
+-                videoOutput.setSampleBufferDelegate(nil, queue: nil)
+-                if session.canAddOutput(videoOutput) {
+-                    session.addOutput(videoOutput)
+-                }
+-                session.commitConfiguration()
+-                
+-                self.captureSession = session
+-                
+-                // Create and set up preview layer on main thread
+-                DispatchQueue.main.async {
+-                    self.cameraAvailable = true
+-                    let previewLayer = AVCaptureVideoPreviewLayer(session: session)
+-                    previewLayer.videoGravity = .resizeAspectFill
+-                    self.previewLayer = previewLayer
+-                    
+-                    // Setup is complete, let the caller know
+-                    completion(true)
+-                }
+-                
+-                NSLog("Capture session setup completed successfully")
+-            } catch {
+-                NSLog("Failed to setup capture session: \(error.localizedDescription)")
+-                DispatchQueue.main.async {
+-                    self.isSessionRunning = false
+-                    self.cameraAvailable = false
+-                    self.previewLayer = nil
+-                }
+-                completion(false)
+-            }
+-        }
+-    }
+-    
+-    /// Cleans up an existing capture session, removing all inputs and outputs
+-    private func cleanupExistingSession() {
+-        if let existingSession = self.captureSession {
+-            // First stop the session if running
+-            if existingSession.isRunning {
+-                existingSession.stopRunning()
+-            }
+-            
+-            // Then perform configuration cleanup
+-            existingSession.beginConfiguration()
+-            
+-            // Remove all inputs and outputs
+-            for input in existingSession.inputs {
+-                existingSession.removeInput(input)
+-            }
+-            for output in existingSession.outputs {
+-                existingSession.removeOutput(output)
+-            }
+-            
+-            existingSession.commitConfiguration()
+-            self.captureSession = nil
+-            
+-            // Clear preview layer on main thread
+-            DispatchQueue.main.async {
+-                self.previewLayer = nil
+-            }
+-        }
+-    }
+-
+-    @objc private func deviceWasDisconnected(notification: Notification) {
+-        NSLog("Camera device was disconnected")
+-        sessionQueue.async { [weak self] in
+-            guard let self = self else { return }
+-            self.stopSession()
+-            DispatchQueue.main.async {
+-                self.cameraAvailable = false
+-            }
+-        }
++        // Intentionally does nothing: no camera permission is ever requested.
+     }
+ 
+-    @objc private func deviceWasConnected(notification: Notification) {
+-        NSLog("Camera device was connected")
+-        sessionQueue.async { [weak self] in
+-            guard let self = self else { return }
+-            self.checkCameraAvailability()
+-        }
++    func checkCameraAvailability() {
++        cameraAvailable = false
+     }
+ 
+-    private func updateSessionState() {
+-        let isRunning = self.captureSession?.isRunning ?? false
+-        DispatchQueue.main.async {
+-            self.isSessionRunning = isRunning
+-        }
+-    }
+-    
+     func startSession() {
+-        sessionQueue.async { [weak self] in
+-            guard let self = self else { return }
+-            
+-            // If no session exists, create new session
+-            if self.captureSession == nil {
+-                self.setupCaptureSession { success in
+-                    if success {
+-                        // Only start the session if setup was successful
+-                        self.startRunningCaptureSession()
+-                    }
+-                }
+-            } else {
+-                // Session already exists, just start it
+-                self.startRunningCaptureSession()
+-            }
+-        }
++        // Intentionally does nothing.
+     }
+-    
+-    private func startRunningCaptureSession() {
+-        sessionQueue.async { [weak self] in
+-            guard let self = self, let session = self.captureSession, !session.isRunning else {
+-                return
+-            }
+-            
+-            session.startRunning()
+-            
+-            // Update state on main thread
+-            self.updateSessionState()
+-            
+-            NSLog("Capture session started successfully")
+-        }
+-    }
+-    
++
+     func stopSession() {
+-        sessionQueue.async { [weak self] in
+-            guard let self = self else { return }
+-            
+-            // Update state to indicate we're stopping
+-            DispatchQueue.main.async {
+-                self.isSessionRunning = false
+-            }
+-            
+-            self.cleanupExistingSession()
+-            
+-            NSLog("Capture session stopped and cleaned up")
+-        }
++        // Intentionally does nothing.
+     }
+ }
